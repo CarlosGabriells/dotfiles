@@ -125,17 +125,6 @@ alias dco="docker-compose"
 alias dps="docker ps"
 alias dim="docker images"
 
-# Git
-alias g="git"
-alias ga="git add"
-alias gc="git commit"
-alias gp="git push"
-alias gl="git pull"
-alias gs="git status"
-alias gd="git diff"
-alias gb="git branch"
-alias gco="git checkout"
-
 # Dirs
 alias ..="cd .."
 alias ...="cd ../.."

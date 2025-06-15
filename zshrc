@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [[ -f "/opt/homebrew/bin/brew" ]] then
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
@@ -26,11 +26,14 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit light jonmosco/kube-ps1
+zinit light hlissner/zsh-autopair
+zinit light zsh-users/zsh-history-substring-search
+zinit light wfxr/forgit
 
 # Add in snippets
 zinit snippet OMZL::git.zsh
@@ -41,6 +44,8 @@ zinit snippet OMZP::aws
 zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
+zinit snippet OMZP::docker-compose
+zinit snippet OMZP::terraform
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -90,17 +95,46 @@ alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time
 alias cd="z"
 alias cat="bat --paging never --style plain"
 alias gauth="gcloud auth login"
+alias code="code ."
+alias lg="lazygit"
+alias redis-cli="docker run --rm -it redis:alpine redis-cli"
+alias myip='curl -s https://checkip.amazonaws.com'
 
 # Kubernetes
+alias k="kubectl"
+alias kg="kubectl get"
+alias kd="kubectl describe"
+alias kdel="kubectl delete"
+alias klog="kubectl logs"
+alias ktop="kubectl top"
+alias ksvc="kubectl get service"
 alias kc="kubectx"
 alias kn="kubens"
-alias pop="popeye"
-alias kg="kubectl get pods"
-alias kdel="kubectl delete"
-alias kd="kubectl describe"
-alias ksvc="kubectl get service"
-alias klog="kubectl get logs"
 alias scan="kubescape scan"
+
+# Infrastructure
+alias tf="terraform"
+alias tfa="terraform apply"
+alias tfp="terraform plan"
+alias tfi="terraform init"
+alias h="helm"
+
+# Docker  
+alias d="docker"
+alias dco="docker-compose"
+alias dps="docker ps"
+alias dim="docker images"
+
+# Git
+alias g="git"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+alias gs="git status"
+alias gd="git diff"
+alias gb="git branch"
+alias gco="git checkout"
 
 # Dirs
 alias ..="cd .."
@@ -112,9 +146,23 @@ alias ......="cd ../../../../.."
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
-eval $(thefuck --alias fuck)
 source <(stern --completion=zsh)
 source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-. $(pack completion --shell zsh)
-export PATH=$PATH:/Users/carlosgabriel/.spicetify
+
+
+
+
+# macOS ARM Optimizations
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ANALYTICS=1
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+# Export command
 export PATH=/Users/carlosgabriel/.groundcover/bin:${PATH}
+export PATH=$PATH:/Users/carlosgabriel/.kubescape/bin
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export EDITOR=nvim
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/carlosgabriel/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
